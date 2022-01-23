@@ -1,5 +1,11 @@
 import datetime
+
 from flask import Flask, render_template
+import sys
+sys.path.append('../cockroach_playgroud')
+from budget import Budget
+
+
 
 app = Flask(__name__)
 @app.route('/')
@@ -18,4 +24,12 @@ def comments():
                 'This is the fourth comment.'
                 ]
 
-    return render_template('comments.html', comments=comments)    
+    return render_template('comments.html', comments=comments)
+
+@app.route('/expense/')
+def expense():
+    budget = Budget()
+    expenses = budget.get_expense_categories()
+    #expenses.keys()
+
+    return render_template('expenses.html', expenses=expenses.keys())
